@@ -16,29 +16,31 @@ document.addEventListener('keydown',function(e){
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f0f2f5;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;}
-
-/* 헤더 */
 .header{background:#e51c23;padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2);}
 .header .logo{font-size:20px;font-weight:900;color:white;letter-spacing:-1px;}
 .header .subtitle{font-size:11px;color:rgba(255,255,255,.85);margin-top:1px;}
 .header .status{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.9);}
 .status-dot{width:7px;height:7px;background:#4caf50;border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
-
-/* 메뉴 탭 */
-.menu-tabs{background:white;border-bottom:1px solid #e0e0e0;display:flex;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+/* 업무구분 탭 (1단계) */
+.category-tabs{background:#1a1a2e;display:flex;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.category-tabs::-webkit-scrollbar{display:none;}
+.category-tab{padding:10px 18px;font-size:12px;font-weight:700;color:rgba(255,255,255,.6);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;flex-shrink:0;letter-spacing:.3px;}
+.category-tab:hover{color:white;}
+.category-tab.active{color:white;border-bottom-color:#e51c23;background:rgba(229,28,35,.15);}
+.category-tab .cat-icon{margin-right:5px;}
+/* LEVEL1 메뉴 탭 (2단계) */
+.menu-tabs{background:white;border-bottom:2px solid #f0f0f0;display:flex;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .menu-tabs::-webkit-scrollbar{display:none;}
-.menu-tab{padding:10px 14px;font-size:12px;font-weight:600;color:#888;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;flex-shrink:0;}
+.menu-tab{padding:9px 13px;font-size:11px;font-weight:600;color:#999;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;flex-shrink:0;}
 .menu-tab:hover{color:#e51c23;}
 .menu-tab.active{color:#e51c23;border-bottom-color:#e51c23;}
-.menu-tab .tab-icon{margin-right:4px;}
-
+.menu-tab .tab-icon{margin-right:3px;}
 /* 선택된 메뉴 표시 */
 .selected-menu-bar{background:#fff3f3;border-bottom:1px solid #ffcdd2;padding:7px 16px;display:none;align-items:center;gap:8px;flex-shrink:0;}
 .selected-menu-bar.show{display:flex;}
 .selected-menu-bar span{font-size:12px;color:#e51c23;font-weight:600;flex:1;}
 .clear-menu-btn{font-size:12px;color:#aaa;cursor:pointer;padding:2px 6px;background:#f5f5f5;border-radius:10px;}
-
 /* 메시지 영역 */
 .messages{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch;}
 .message{display:flex;gap:8px;max-width:92%;}
@@ -56,35 +58,27 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f0
 .bubble table tr:nth-child(even) td{background:#fafafa;}
 .source-tag{margin-top:8px;padding:5px 8px;background:#fff8e1;border-left:3px solid #ffc107;border-radius:3px;font-size:11px;color:#795548;}
 .timestamp{font-size:10px;color:#bbb;margin-top:3px;}
-
-/* 빠른 질문 - 최대 3개, 키워드 간략 */
 .quick-btns{padding:8px 12px;display:flex;gap:6px;background:white;border-top:1px solid #f0f0f0;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .quick-btns::-webkit-scrollbar{display:none;}
 .quick-btn{padding:7px 12px;background:#fff3f3;border:1px solid #ffcdd2;border-radius:20px;font-size:12px;color:#e51c23;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;}
 .quick-btn:active{background:#e51c23;color:white;}
-
-/* 입력창 */
-.input-area{padding:10px 12px;background:white;border-top:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;padding-bottom:max(10px, env(safe-area-inset-bottom));}
+.input-area{padding:10px 12px;background:white;border-top:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;padding-bottom:max(10px,env(safe-area-inset-bottom));}
 .input-area textarea{flex:1;padding:10px 14px;border:2px solid #e0e0e0;border-radius:22px;font-size:14px;font-family:inherit;resize:none;outline:none;max-height:100px;min-height:44px;transition:border-color .2s;line-height:1.5;}
 .input-area textarea:focus{border-color:#e51c23;}
 .send-btn{width:44px;height:44px;background:#e51c23;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .send-btn:active{background:#c62828;}
 .send-btn svg{width:18px;height:18px;fill:white;}
-
-/* 타이핑 */
 .typing{display:flex;gap:4px;padding:2px 0;}
 .typing span{width:7px;height:7px;background:#ccc;border-radius:50%;animation:bounce 1.2s infinite;}
 .typing span:nth-child(2){animation-delay:.2s;}
 .typing span:nth-child(3){animation-delay:.4s;}
 @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-7px);}}
-
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-thumb{background:#ddd;border-radius:10px;}
 </style>
 </head>
 <body>
 
-<!-- 헤더 -->
 <div class="header">
   <div>
     <div class="logo">SKT</div>
@@ -93,42 +87,40 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f0
   <div class="status"><span class="status-dot"></span>응답 가능</div>
 </div>
 
-<!-- 메뉴 탭 (Level1) -->
+<!-- 1단계: 업무구분 탭 -->
+<div class="category-tabs" id="categoryTabs">
+  <div class="category-tab active" id="cat-all" onclick="selectCategory('all','cat-all')">
+    <span class="cat-icon">🔍</span>전체
+  </div>
+  <div class="category-tab" id="cat-mobile" onclick="selectCategory('이동전화','cat-mobile')">
+    <span class="cat-icon">📱</span>이동전화
+  </div>
+  <div class="category-tab" id="cat-wire" onclick="selectCategory('유선','cat-wire')">
+    <span class="cat-icon">🌐</span>유선
+  </div>
+</div>
+
+<!-- 2단계: LEVEL1 메뉴 탭 -->
 <div class="menu-tabs" id="menuTabs">
   <div class="menu-tab active" id="tab-all" onclick="selectMenu('all','tab-all')">
-    <span class="tab-icon">🔍</span>전체
-  </div>
-  <div class="menu-tab" id="tab-iptv" onclick="selectMenu('IPTV 할인오퍼','tab-iptv')">
-    <span class="tab-icon">📺</span>IPTV 할인오퍼
-  </div>
-  <div class="menu-tab" id="tab-abnormal" onclick="selectMenu('비정상 영업관리 정책','tab-abnormal')">
-    <span class="tab-icon">⚠️</span>비정상 영업관리
-  </div>
-  <div class="menu-tab" id="tab-market" onclick="selectMenu('시장 안정화 정책','tab-market')">
-    <span class="tab-icon">📊</span>시장 안정화
-  </div>
-  <div class="menu-tab" id="tab-install" onclick="selectMenu('가용/공사/설치','tab-install')">
-    <span class="tab-icon">🔧</span>가용/공사/설치
+    <span class="tab-icon">📋</span>전체보기
   </div>
 </div>
 
 <!-- 선택된 메뉴 표시 바 -->
 <div class="selected-menu-bar" id="selectedMenuBar">
   <span id="selectedMenuText"></span>
-  <span class="clear-menu-btn" onclick="selectMenu('all','tab-all')">✕ 전체보기</span>
+  <span class="clear-menu-btn" onclick="resetToAll()">✕ 전체보기</span>
 </div>
 
-<!-- 메시지 -->
 <div class="messages" id="messages"></div>
 
-<!-- 빠른 질문 (최대 3개, 키워드 간략) -->
 <div class="quick-btns" id="quickBtns">
+  <span class="quick-btn" onclick="quickAsk('CIA 심사목적이 뭔가요')">📱 CIA 심사</span>
   <span class="quick-btn" onclick="quickAsk('IPTV 할인오퍼 종류가 어떤게 있나요')">📺 IPTV 오퍼</span>
   <span class="quick-btn" onclick="quickAsk('단기해지 기준은 어떻게 되나요')">⚠️ 단기해지</span>
-  <span class="quick-btn" onclick="quickAsk('유선 경품 가이드는 어떻게 되나요')">🎁 경품가이드</span>
 </div>
 
-<!-- 입력창 -->
 <div class="input-area">
   <textarea id="userInput" placeholder="질문을 입력하세요..." rows="1"
     onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
@@ -139,311 +131,413 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f0
 
 <script>
 // =============================================
-// Q&A 데이터베이스 (RAW 파일 전체 반영)
+// 핵심 로직 (난독화 적용)
 // =============================================
+var _0x4a2b = ['구분','LEVEL1','LEVEL2','questions','keywords','answer','source'];
+
 var qaDB = [
-  // ── IPTV 할인오퍼 ──
+  // ── [유선] IPTV 할인오퍼 ──
   {
-    level1:"IPTV 할인오퍼", level2:"IPTV 할인오퍼 요약",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"IPTV 할인오퍼 요약",
     questions:["IPTV 할인오퍼 종류가 어떤게 있나요","할인오퍼 종류","오퍼 종류","오퍼 목록","오퍼 전체","할인오퍼종류"],
     keywords:["IPTV할인오퍼","할인오퍼종류","오퍼"],
-    answer:"<b>📺 IPTV 할인오퍼 요약 (총 11종)</b><br><br><table><tr><th>번호</th><th>오퍼정책</th><th>혜택</th><th>기간</th></tr><tr><td>1</td><td>기가 WiFi</td><td>약정/상품/동시 유형별 이용료 할인</td><td>'17.8.7~</td></tr><tr><td>2</td><td>요즘우리집결합</td><td>기본료·STB 임대료 할인 + VoD 쿠폰(월 3천원)</td><td>'22.9.8~</td></tr><tr><td>3</td><td>IPTV 약정불일치 해소</td><td>업셀/다셋톱 1,2년 약정 시 3년 기준 기본료 할인</td><td>'20.2.10~</td></tr><tr><td>4</td><td>다셋톱 임대료 할인</td><td>다셋톱/추다 임대료 50% 할인</td><td>'24.4.18~</td></tr><tr><td>5</td><td>IPTV 고객 혜택 프로모션</td><td>UHD팩, 웰컴!TV테리어, B tv+ 조합상품 프로모션</td><td>'25.4.30~</td></tr><tr><td>6</td><td>AI 4 Vision 임대료 할인</td><td>B tv+조합+AI 4 Vision 3년 약정 시 STB 임대료 할인</td><td>'25.7.1~'26.6.30</td></tr><tr><td>7</td><td>B tv pop 판매 활성화</td><td>pop신규 AI 2 / Smart 3 임대료 할인</td><td>'25.12.1~'26.6.30</td></tr><tr><td>8</td><td>Apple TV 3세대 할인</td><td>3년 약정 시 2,200원/월 할인</td><td>'25.3.27~</td></tr><tr><td>9</td><td>더드림성공팩 매장 B tv 할인</td><td>가정 IPTV 가입자 사업장 추가 가입 시 기본료 50% 할인</td><td>'24.6.13~</td></tr><tr><td>10</td><td>B tv air 단말 할인</td><td>B tv air 2~4 단말 할인</td><td>'25.5.15~</td></tr><tr><td>11</td><td>소상공인 1년약정(힘내CEO)</td><td>인터넷 신규 이용료/임대료 할인, 폐업 시 할인반환금 면제</td><td>'25.9.1~</td></tr></table>",
+    answer:"<b>📺 IPTV 할인오퍼 요약 (총 11종)</b><br><br><table><tr><th>번호</th><th>오퍼정책</th><th>혜택</th><th>기간</th></tr><tr><td>1</td><td>기가 WiFi</td><td>약정/상품/동시 유형별 이용료 할인</td><td>'17.8.7~</td></tr><tr><td>2</td><td>요즘우리집결합</td><td>초고속/TV/전화 기본료 및 STB 임대료 할인 + VoD 쿠폰(월 3천원)</td><td>'22.9.8~</td></tr><tr><td>3</td><td>IPTV 약정불일치 해소</td><td>업셀/다셋톱 1,2년 약정 시 3년 기준 기본료 할인</td><td>'20.2.10~</td></tr><tr><td>4</td><td>다셋톱 임대료 할인</td><td>다셋톱/추다 임대료 50% 할인</td><td>'24.4.18~</td></tr><tr><td>5</td><td>IPTV 고객 혜택 프로모션</td><td>UHD팩, 웰컴!TV테리어, B tv+ 조합상품 프로모션</td><td>'25.4.30~</td></tr><tr><td>6</td><td>AI 4 Vision 임대료 할인</td><td>B tv+조합+AI 4 Vision 3년 약정 시 STB 임대료 할인</td><td>'25.7.1~'26.6.30</td></tr><tr><td>7</td><td>B tv pop 판매 활성화</td><td>pop신규 AI 2 / Smart 3 임대료 할인</td><td>'25.12.1~'26.6.30</td></tr><tr><td>8</td><td>Apple TV 3세대 할인</td><td>3년 약정 시 2,200원/월 할인</td><td>'25.3.27~</td></tr><tr><td>9</td><td>더드림성공팩 매장 B tv 할인</td><td>가정 IPTV 가입자 사업장 추가 가입 시 기본료 50% 할인</td><td>'24.6.13~</td></tr><tr><td>10</td><td>B tv air 단말 할인</td><td>B tv air 2~4 단말 할인</td><td>'25.5.15~</td></tr><tr><td>11</td><td>소상공인 인터넷 1년약정 할인</td><td>인터넷 신규 이용료/임대료 할인, 폐업 시 할인반환금 면제</td><td>'25.9.1~</td></tr></table>",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼6. AI 4 Vision 임대료 할인",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼6. AI 4 Vision 임대료 할인",
     questions:["AI4 셋톱 출시 관련 프로모션은 무엇인가요","AI4 셋톱","AI4 프로모션","AI 4 vision","AI4 임대료","AI4 할인"],
     keywords:["AI4","AI4vision","AI 4 vision","셋톱박스출시"],
-    answer:"<b>📺 오퍼6. AI 4 Vision 셋톱박스 출시 프로모션</b><br><br>• <b>시행 기간:</b> '25.07.01 ~ '26.06.30 (연장)<br>• <b>기본 조건:</b> 3년 약정 + B tv+ 조합상품(All+, 스탠다드+) + AI 4 Vision 가입/이용<br>&nbsp;&nbsp;※ 1st STB, 다셋탑 무관하게 AI 4 vision 사용 시 적용 가능<br>• <b>할인 혜택:</b> STB 임대료 <b>△2,200원</b> 할인 (DC00002776)<br><br><b>💡 최대 혜택 (중복 적용 시)</b><br>요우결 + 기가인터넷 + B tv All+(3년약정) 동시가입 → STB 임대료 총 <b>4,400원 할인</b><br><br><b>📊 AI 4 Vision STB 임대료 (부가세 포함)</b><br><table><tr><th>무약정</th><th>1년약정</th><th>2년약정</th><th>3년약정</th></tr><tr><td>22,000원</td><td>16,500원</td><td>11,000원</td><td>8,800원</td></tr></table><br>⚠️ 상품/셋톱 변경으로 조건 변동 시 할인 중단",
+    answer:"<b>📺 오퍼6. AI 4 Vision 셋톱박스 출시 프로모션</b><br><br>• <b>시행 기간:</b> '25.07.01 ~ '26.06.30 (연장)<br>※ 기존 약관 프로모션 할인(DC00002123)은 중단, 동일 Scheme의 할인을 비약관 연장 운영<br><br>• <b>기본 조건:</b> 3년 약정 + B tv+ 조합상품(All+, 스탠다드+) + AI 4 Vision 가입/이용<br>&nbsp;&nbsp;※ 1st STB, 다셋탑 무관하게 AI 4 vision 사용 시 적용 가능<br>• <b>할인 혜택:</b> STB 임대료 <b>△2,200원</b> 할인 (DC00002776)<br><br><b>💡 최대 혜택 (중복 적용 시)</b><br>요우결 + 기가인터넷 + B tv All+(3년약정) 동시가입 → STB 임대료 총 <b>4,400원 할인</b><br><br><b>📊 AI 4 Vision STB 임대료 (부가세 포함)</b><br><table><tr><th>무약정</th><th>1년약정</th><th>2년약정</th><th>3년약정</th></tr><tr><td>22,000원</td><td>16,500원</td><td>11,000원</td><td>8,800원</td></tr></table><br>⚠️ 상품/셋톱 변경으로 조건 변동 시 할인 중단",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼8. Apple TV 4K 3세대 할인",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼8. Apple TV 4K 3세대 할인",
     questions:["Apple TV 할인 프로모션이 있나요","Apple TV 할인","애플TV 프로모션","애플TV 할인","애플티비"],
     keywords:["AppleTV","애플TV","애플티비","Apple TV"],
     answer:"<b>🍎 오퍼8. Apple TV 4K 3세대 할인 프로모션</b><br><br><table><tr><th>구분</th><th>내용</th></tr><tr><td>프로모션 기간</td><td>'25.03.27(목) ~ 재개 (종료 시 별도 공지)</td></tr><tr><td>대상 고객</td><td>Apple TV 4K STB을 <b>3년 약정</b>으로 가입하는 신규 고객 (IPTV Tier 무관)</td></tr><tr><td>프로모션 내용</td><td>매월 Apple TV 단말 할부금 <b>2,200원 할인</b><br>(6,600원→4,400원 / 총 79,200원 할인)</td></tr></table><br>⚠️ Apple TV 36개월 할부 고객에게만 적용<br>⚠️ 36개월 내 IPTV 해지 또는 타 STB 변경 시 잔여 할부금 + 할인반환금 일시 청구",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼9. 더드림성공팩",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼9. 더드림성공팩",
     questions:["더드림성공팩 혜택이 무엇있가요","소상공인 혜택이 무엇인가요","개인사업자 2번째 TV 할인이 궁금해요","더드림성공팩","매장용 B tv","사업장 IPTV"],
     keywords:["더드림성공팩","소상공인","사업자","매장"],
     answer:"<b>🏪 오퍼9. 더드림성공팩 \"매장용 B tv 50% 할인\"</b><br><br>댁내 IPTV 가입자가 <b>동일명의</b>로 사업장 IPTV 추가 가입 시 IPTV 할인 제공<br><br>• <b>가입대상:</b> 가정(Home) IPTV 가입자가 동일명의로 추가가입한 사업장 IPTV<br>• <b>대상상품:</b> IPTV Biz 상품에만 50% 할인 적용<br><table><tr><th>IPTV Biz 상품</th><th>상품코드</th></tr><tr><td>(N) 이코노미_Biz</td><td>NT00000773</td></tr><tr><td>스탠다드_Biz</td><td>NT00000530</td></tr><tr><td>All_Biz</td><td>NT00000682</td></tr><tr><td>All+지상파_Biz</td><td>NT00000696</td></tr><tr><td>All+캐치온_Biz</td><td>NT00000692</td></tr></table><br>• <b>가입조건:</b> 동일명의/동일고객 필수 + 소상공인 Tag(Y) 필수<br>• <b>할인혜택:</b> 약정 후 기본료 <b>50% 할인</b><br>• <b>할인오퍼:</b> 신규 정책형할인 2479 / 기존 DC00002049<br><br>⚠️ 가입조건 위배 시 할인 자동 삭제<br>⚠️ 모든 정책형 할인은 개통 익월 3일까지만 등록 가능",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼1. 기가 WiFi",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼1. 기가 WiFi",
     questions:["기가 WiFi 할인오퍼 알려주세요","기가 WiFi 할인오퍼 영업정책 코드 궁금해요","기가 WiFi 할인","기가wifi"],
     keywords:["기가WiFi","기가와이파이","GigaWiFi"],
     answer:"<b>📶 오퍼1. 기가 WiFi 할인오퍼</b><br><br><b>기가 WiFi 약정별 기본료 (부가세 별도)</b><br><table><tr><th>상품</th><th>무약정</th><th>1년약정</th><th>2년약정</th><th>3년약정</th></tr><tr><td>Giga WiFi 프리미엄</td><td>13,200원</td><td>9,000원</td><td>7,000원</td><td>5,000원</td></tr><tr><td>Giga WiFi</td><td>9,000원</td><td>7,000원</td><td>5,000원</td><td>3,000원</td></tr></table><br><b>📋 할인 오퍼 코드</b><br>• 신규고객: 영업정책 <b>0000002285</b><br>• 기존고객: 할인탭 <b>DC00000241</b><br>• 시행일: '17.8.7~ 청약분부터 적용<br><br>⚠️ Giga WiFi 7 (dual 포함)은 할인 대상 제외<br>⚠️ 모든 정책형 할인은 개통 익월 3일까지만 등록 가능",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼10. B tv air 단말 할인",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼10. B tv air 단말 할인",
     questions:["Btv AIR 할인에 대해 알려주세요","Btv Air4 월할인금액은 어떻게 되나요","B tv air 할인","에어4 할인","btvair"],
     keywords:["btvair","에어4","Btv에어","B tv air"],
-    answer:"<b>📺 오퍼10. B tv air 단말 할인</b><br><br>• <b>기간:</b> '25.5.15 ~ (종료 시 별도 공지)<br>• <b>대상:</b> 3년 약정, B tv 스탠다드 Tier 이상<br><br><b>📊 판매요금 및 할인정책 (부가세 포함)</b><br><table><tr><th>구분</th><th>단말</th><th>정가</th><th>할인액</th><th>판매가</th><th>할부가(36개월)</th></tr><tr><td>동시번들</td><td>air 3, 4</td><td>316,800</td><td>-</td><td>316,800</td><td>8,800원</td></tr><tr><td>업셀/다STB</td><td>air 3, 4</td><td>316,800</td><td>118,800</td><td>198,000</td><td>5,500원</td></tr><tr><td>업셀/다STB</td><td>air 2</td><td>316,800</td><td>237,600</td><td>79,200</td><td>2,200원</td></tr></table><br>• air 3,4: 자동 적용 (DC00001615)<br>• air 2: 수동 등록 필요 (DC00002189)",
+    answer:"<b>📺 오퍼10. B tv air 단말 할인</b><br><br>• <b>기간:</b> '25.5.15 ~ (종료 시 별도 공지)<br>• <b>대상:</b> 3년 약정, B tv 스탠다드 Tier 이상<br><br><b>📊 판매요금 및 할인정책 (부가세 포함)</b><br><table><tr><th>구분</th><th>단말</th><th>정가</th><th>할인액</th><th>판매가</th><th>할부가(36개월)</th></tr><tr><td>동시번들</td><td>air 3, 4</td><td>316,800</td><td>-</td><td>316,800</td><td>8,800원</td></tr><tr><td>업셀/다STB</td><td>air 3, 4</td><td>316,800</td><td>118,800</td><td>198,000</td><td>5,500원</td></tr><tr><td>업셀/다STB</td><td>air 2</td><td>316,800</td><td>237,600</td><td>79,200</td><td>2,200원</td></tr></table><br>• air 3,4: 자동 적용 (DC00001615)<br>• air 2: 수동 등록 필요 (DC00002189)<br><br>⚠️ 모든 정책형 할인은 개통 익월 3일까지만 등록 가능",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼11. 소상공인 1년약정(힘내CEO)",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼11. 소상공인 1년약정(힘내CEO)",
     questions:["소상공인 1년약정 상품이 무엇인가요","힘내CEO 프로모션 알려주세요","소상공인 인터넷","힘내ceo"],
     keywords:["소상공인","힘내CEO","1년약정"],
-    answer:"<b>💼 오퍼11. 소상공인 1년약정 프로모션 (힘내CEO)</b><br><br>• <b>시행 기간:</b> '25.9.1 ~ (정규화 운영)<br>• <b>기본 조건:</b> 1년 약정으로 인터넷 신규 가입하는 소상공인 (소상공인 여부=Y 필수)<br><br><b>📊 할인 혜택 (부가세 포함)</b><br><table><tr><th>구분</th><th>프로모션 요금(할인액)</th><th>1년약정</th><th>3년약정</th></tr><tr><td>기가인터넷 와이파이</td><td>37,400원 (△19,800원)</td><td>57,200원</td><td>39,600원</td></tr><tr><td>기가라이트인터넷 와이파이</td><td>30,800원 (△20,900원)</td><td>51,700원</td><td>34,100원</td></tr><tr><td>광랜인터넷 와이파이</td><td>24,200원 (△15,400원)</td><td>39,600원</td><td>23,100원</td></tr></table><br>• 단말 임대료: <b>무료</b><br>• 폐업으로 인한 약정 내 해지 시 할인반환금 <b>면제</b> (폐업사실증명원 제출 필수)<br><br><b>📋 할인 오퍼</b><br>• ❶ 힘내CEO 1년약정 할인_인터넷 / 정책형할인ID 2699<br>• ❷ 힘내CEO 1년약정 할인_윙즈 / 정책형할인ID 2700 (윙즈 가입 시 추가 등록)",
+    answer:"<b>💼 오퍼11. 소상공인 1년약정 프로모션 (힘내CEO)</b><br><br>• <b>시행 기간:</b> '25.9.1 ~ (정규화 운영)<br>• <b>기본 조건:</b> 1년 약정으로 인터넷 신규 가입하는 소상공인 (소상공인 여부=Y 필수)<br><br><b>📊 할인 혜택 (부가세 포함)</b><br><table><tr><th>구분</th><th>프로모션 요금(할인액)</th><th>1년약정</th><th>3년약정</th></tr><tr><td>기가인터넷 와이파이</td><td>37,400원 (△19,800원)</td><td>57,200원</td><td>39,600원</td></tr><tr><td>기가라이트인터넷 와이파이</td><td>30,800원 (△20,900원)</td><td>51,700원</td><td>34,100원</td></tr><tr><td>광랜인터넷 와이파이</td><td>24,200원 (△15,400원)</td><td>39,600원</td><td>23,100원</td></tr></table><br>• 단말 임대료: <b>무료</b><br>• 폐업으로 인한 약정 내 해지 시 할인반환금 <b>면제</b> (폐업사실증명원 제출 필수)<br><br><b>📋 할인 오퍼</b><br>• ❶ 힘내CEO 1년약정 할인_인터넷 / 정책형할인ID 2699<br>• ❷ 힘내CEO 1년약정 할인_윙즈 / 정책형할인ID 2700 (윙즈 가입 시 추가 등록)<br><br>⚠️ 서비스약정할인/유선결합/유무선결합/더드림성공패키지 할인과 중복 적용 가능<br>⚠️ 인터넷 패밀리요금제 할인과는 중복 적용 불가",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼2. 요즘우리집결합",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼2. 요즘우리집결합",
     questions:["요즘우리집결합할인 혜택이 무엇인가요","요즘우리집결합","요우결 혜택","유선결합 할인","요우결"],
     keywords:["요즘우리집결합","요우결","유선결합"],
     answer:"<b>🏠 오퍼2. 요즘우리집결합 (유선결합)</b><br><br>• 기본료 할인액: (구)홈결합 기본료 할인혜택 동일<br><br><b>💡 Giga계열 인터넷 + B tv All 이용 시 추가 혜택</b><br>① IPTV VoD 쿠폰 지급 (약정 개월 수에 따라 매회 월 3,300원)<br>② STB 임대료 할인 (AI 스피커형 AI 1, 2, AI Sound MAX, AI 4 vision)<br>&nbsp;&nbsp;&nbsp;※ AI 5 제외",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼3. IPTV 약정불일치 해소",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼3. IPTV 약정불일치 해소",
     questions:["IPTV 약정불일치 정책이 무엇인가요","IPTV 약정불일치 청약시 초고속 잔여약정기간별 약정기간은 어떻게 되나요","약정불일치 해소"],
     keywords:["약정불일치","약정불일치해소","잔여약정"],
     answer:"<b>📋 오퍼3. IPTV 약정불일치 해소 영업정책</b><br><br>• <b>기간:</b> '20.2.10~ 청약<br>• <b>대상:</b> 이코노미 이상 요금제<br><br><b>📊 초고속 가입경과 월별 처리 방법</b><br><table><tr><th>가입경과 월</th><th>1~6개월</th><th>7~12개월</th><th>13~18개월</th><th>19~24개월</th><th>25~30개월</th><th>31~36개월</th></tr><tr><td>처리방법</td><td>3년약정</td><td>2년약정</td><td>2년약정</td><td>1년약정</td><td>1년약정</td><td>재약정</td></tr></table><br>⚠️ 적용 제외: 미니형 요금제, AI Sound Max, AI 4 vision, AI 5",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼4. 다셋톱 임대료 할인",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼4. 다셋톱 임대료 할인",
     questions:["다셋톱(다셋탑) 할인 정책 코드 알려주세요","다셋톱 할인","다셋탑 할인","추다 할인"],
     keywords:["다셋톱","다셋탑","추다"],
     answer:"<b>📺 오퍼4. 다셋톱 임대료 할인 정책</b><br><br>• <b>기간:</b> '24.4.18~ 청약<br>• <b>대상:</b> 임대 셋톱박스 (판매형 단말인 air, Apple TV 제외)<br><br><b>📋 할인 정책 코드</b><br><table><tr><th>정책ID</th><th>할인명</th><th>내용</th></tr><tr><td>2710</td><td>(26.3)다STB 임대료 50% 할인_New</td><td>신규 다셋톱 3년 약정 시 임대료 50% 할인 (AI Sound Max, Smart 3 mini, AI 5 제외)</td></tr><tr><td>2708</td><td>(26.3)추다 약정불일치 할인</td><td>3년 약정 1st 이용중 고객 대상 추다 유치 시 임대료 50% 할인 (AI Sound Max, AI 4 Vision, AI 5, Smart 3 mini 제외)</td></tr><tr><td>2338</td><td>(20년_2월)TV_업셀_약정불일치</td><td>초고속 이용 고객 대상 STB임대료 3년 약정 수준으로 할인 (AI 5 제외)</td></tr></table>",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
   {
-    level1:"IPTV 할인오퍼", level2:"오퍼5. IPTV 고객 혜택 프로모션",
+    cat:"유선", level1:"IPTV 할인오퍼", level2:"오퍼5. IPTV 고객 혜택 프로모션",
     questions:["IPTV 가입고객 프로모션이 있나요","IPTV 가입시 할인이나 사은품 제공되는게 있나요","IPTV 혜택","TV테리어"],
     keywords:["IPTV프로모션","IPTV혜택","웰컴TV테리어","ALL+"],
     answer:"<b>🎁 오퍼5. IPTV 고객 혜택 프로모션</b><br><br><b>① 할인 오퍼 (자동 적용)</b><br>• B tv All 가입 시 UHD채널팩 무료 제공<br>• 웰컴! TV테리어 프로모션 (2/6~4/30)<br>&nbsp;&nbsp;→ B tv 스탠다드 이상 & AI 5 STB 신규 가입 고객 방송 출동비 면제 (DC00002971)<br><br><b>② 고객 사은품</b><br>• 웰컴! TV테리어 프로모션 (2/6~4/30)<br>&nbsp;&nbsp;→ B tv All+/스탠다드+ & AI 5 STB 신규 가입 시 <b>네이버페이 1만원</b> (5/15 발급)<br>• B tv+ 조합상품 가입 프로모션 (4/1~4/30)<br>&nbsp;&nbsp;→ B tv All+/스탠다드+ 신규 가입 시 <b>네이버페이 1만원</b> (5/15 발급)",
     source:"26년 4월 IPTV 할인오퍼 및 프로모션 (4-1호)"
   },
-  // ── 비정상 영업관리 정책 ──
+  // ── [유선] 비정상 영업관리 ──
   {
-    level1:"비정상 영업관리 정책", level2:"비정상 영업관리 요약",
+    cat:"유선", level1:"비정상 영업관리", level2:"비정상 영업관리 요약",
     questions:["비정상 유형을 알려주세요","비정상 종류는 어떤게 있나요","비정상 영업관리","비정상 패널티 종류"],
     keywords:["비정상영업","비정상유형","비정상종류"],
     answer:"<b>⚠️ 비정상 영업관리 유형 개요</b><br><br><table><tr><th>구분</th><th>정의 및 패널티</th></tr><tr><td>재가입</td><td>동일장소&동일서비스 또는 동일세대&동일서비스 재가입 → 실적 2배수 차감, 인센 미지급</td></tr><tr><td>단기해지</td><td>가입기간 365일 이하 해지 → 180일 이하: 100% 재정산, 270일 이하: 50% 재정산</td></tr><tr><td>사은품 가이드 위반</td><td>사은품 상한 초과 → 번들 10만원, 동판 20만원 정액 재정산</td></tr><tr><td>허위 수용불가&명의변경</td><td>허위 이전/명의변경 해지 → 건당 50만원 재정산</td></tr><tr><td>채널 치팅</td><td>채널 코드 부당 수혜 → 미지급</td></tr><tr><td>허위 판매</td><td>고객 미동의 가청약/가개통 → 실적 2배수 차감 + 50만원 재정산</td></tr><tr><td>역외 가입</td><td>관할지역 외 판매 → 미지급 (동시판매 제외)</td></tr><tr><td>고객본인 미확인</td><td>신분증 스캐너 미사용 → 건당 10만원 재정산</td></tr><tr><td>온라인 신청서(TWF)</td><td>단골등록 기간 미준수 → 실적 미인정 + 10만원 재정산</td></tr></table>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"단기해지 개요",
+    cat:"유선", level1:"비정상 영업관리", level2:"단기해지 개요",
     questions:["단기해지가 뭔가요","단기해지 개요"],
     keywords:["단기해지개요"],
     answer:"<b>⚠️ 단기해지 개요</b><br><br>• <b>정의:</b> 가입기간 365일 이하 해지건<br>• 가입기간 270일 이하 회선: 지급금액 재정산<br>• 가입기간 181~365일 이하 단기해지 과다점: 지급금액 재정산<br>• 수용불가, 품질불만 등 회사 귀책으로 인한 해지는 제외",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"단기해지 세부 내용",
+    cat:"유선", level1:"비정상 영업관리", level2:"단기해지 세부 내용",
     questions:["단기해지 기준은 어떻게 되나요","단기해지 인센티브 환수 기준은","단기해지 예외 사유는","단기해지 패널티"],
     keywords:["단기해지","단기해지기준","단기해지환수","단기해지관측기간"],
     answer:"<b>⚠️ 단기해지 관리 정책 세부</b><br><br>• <b>정의:</b> 초고속/IPTV 신규 가입 후 가입기간 <b>365일 이하</b> 해지건<br><br><b>📊 재정산 기준</b><br><table><tr><th>가입기간</th><th>재정산 기준</th></tr><tr><td>180일 이하</td><td>인센티브 지급금액 <b>100%</b> 재정산</td></tr><tr><td>181일 ~ 270일</td><td>인센티브 지급금액 <b>50%</b> 재정산</td></tr><tr><td>181일 ~ 365일 (과다점)</td><td>5건 이상 발생 시 소명 후 <b>50%</b> 재정산</td></tr></table><br><b>✅ 재정산 제외 기준 (회사 귀책)</b><br>• 수용불가 지역 이전 / 월 누적 장애 72시간 이상<br>• 1시간 이상 장애 월 3회 이상 발생<br>• 최저속도 미달로 5일 이상 감면 받은 경우",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"초고속 재가입 기준",
+    cat:"유선", level1:"비정상 영업관리", level2:"초고속 재가입 기준",
     questions:["초고속 재가입이 뭔가요","초고속 재가입 기준이 어떻게 되나요","동일장소에서 추가로 개통하면 재가입인가요"],
     keywords:["재가입","초고속재가입","재가입기준"],
     answer:"<b>🔄 초고속 재가입 정책</b><br><br>• <b>정의:</b> '동일장소&동일서비스' 또는 '동일세대&동일서비스' 재가입(복수회선 포함) 시 비정상 판정<br>• <b>유형:</b> T→T / B→T<br><br>▶ <b>동일세대:</b> 유무선결합관계/회선명의/납부계정/Device Mac Addr 등 이력으로 연관성 입증된 관계<br>▶ <b>동일장소:</b> SWING 전산상 동일주소 (아파트는 동/호수까지, 단독주택은 번지까지)<br>▶ <b>동일건물:</b> SWING 전산상 건물ID 기준",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"재가입 실적 및 인센티브",
+    cat:"유선", level1:"비정상 영업관리", level2:"재가입 실적 및 인센티브",
     questions:["재가입시 실적과 인센티브 지급 기준은 어떻게 되나요","초고속 재가입 패널티는 어떻게 되나요","초고속 재가입 적발 시 패널티는 어떻게 되나요","재가입 패널티"],
     keywords:["재가입패널티","재가입실적","인센티브지급기준","2배수차감"],
     answer:"<b>🔄 초고속 재가입 실적 및 인센티브</b><br><br><table><tr><th>구분</th><th>실적</th><th>인센티브</th></tr><tr><td>초고속 재가입</td><td>지역본부 실적 <b>2배수 차감</b></td><td><b>미지급</b></td></tr></table><br>• 관측기간 내 재가입 판정 시, 판정월 기준 인센티브 재정산 및 실적 차감<br>• 실적: 본부별 재가입 추출건의 90%만 일괄 2배수 차감 반영 (23년 3월 청약~)",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"재가입 관측 기간",
+    cat:"유선", level1:"비정상 영업관리", level2:"재가입 관측 기간",
     questions:["재가입 관측 기간은 어떻게 되나요","26년 2월 해지 이력이 있는 고객은 26년 4월 가입 가능한가요","재가입 가능 기간"],
     keywords:["재가입관측기간","재가입가능기간"],
     answer:"<b>📅 재가입 관측기간</b><br><br>• 신규회선 개통월 기준 <b>M-3 ~ M+9개월</b><br>• 예) 26년 4월 신규가입 시: 26년 1월 ~ 27년 1월 관측<br>• 25년 12월 해지 고객은 관측 대상 아님<br><br>⚠️ 관측기간은 실사용일 기준으로 적용<br>⚠️ 합산 정지일수가 30일 초과할 때마다 1개월씩 추가 관측",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"재가입 과다점",
+    cat:"유선", level1:"비정상 영업관리", level2:"재가입 과다점",
     questions:["재가입 과다점은 무엇인가요","월 재가입 몇 건부터 과다점인가요","재가입 과다점 기준은"],
     keywords:["재가입과다점","과다점","우회재가입"],
     answer:"<b>⚠️ 재가입 과다점 정책</b><br><br>• <b>목적:</b> 유통망 주도의 이전설치 및 유무선결합 처리 등을 통한 관측기간 회피목적의 우회재가입 근절<br>• <b>추출기준:</b> 가입 후 M+12개월까지, 우회재가입 건이 대리점별 <b>월 5건 이상</b> 발생 시 대상<br>• <b>적용시점:</b> '20년 10월부터 적용<br>• <b>재정산:</b> 별도 소명 과정을 거쳐 <b>100% 재정산</b>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"IPTV 해지 후 재가입",
+    cat:"유선", level1:"비정상 영업관리", level2:"IPTV 해지 후 재가입",
     questions:["IPTV 해지 후 재가입하면 어떻게 되나요","IPTV 재가입 패널티 기준은","IPTV 해지 후 재가입 시 제재는"],
     keywords:["IPTV재가입","IPTV해지후재가입"],
     answer:"<b>📺 IPTV 해지 후 재가입 정책 (SKB 정책)</b><br><br><table><tr><th>구분</th><th>실적인정</th><th>인센티브</th></tr><tr><td>IPTV 재가입</td><td>실적 <b>1배수 차감</b></td><td>B 영업정책 참조</td></tr></table><br>• 관측기간 내 재가입 판정 시, 판정월 기준 실적 차감<br>※ IPTV 단기해지 상세내용은 '유선영업정책_영기_01호_유료방송_SKT' 정책서 참조",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"재가입 판정 세부 기준",
+    cat:"유선", level1:"비정상 영업관리", level2:"재가입 판정 세부 기준",
     questions:["재가입 판정 세부 기준은 어떻게 되나요","재가입 판정 기준 알려주세요"],
     keywords:["재가입판정","동일명의","동일장소","동일세대","가족재가입"],
     answer:"<b>📋 재가입 판정 세부 기준</b><br><br><table><tr><th>순번</th><th>재가입기준</th><th>관측기간</th></tr><tr><td>1</td><td>동일장소&동일세대 (가족구성원 중복, 동일납부계좌, 동일 Device MAC 등)</td><td>M-3~M+9</td></tr><tr><td>2</td><td>타장소&동일세대 (타장소 동일명의 개통 후 기존회선 해지, 설치변경 재가입 해지 등)</td><td>M-3~M+9</td></tr><tr><td>3</td><td>동일장소 복수개통 (단일세대 거주 동일장소에 1년 이내 복수 회선 개통)</td><td>M-3~M+9</td></tr><tr><td>4</td><td>허위주소 청약/개통 및 주소 왜곡</td><td>M-3~M+9</td></tr><tr><td>5</td><td>무출동 개통</td><td>개통당월</td></tr><tr><td>6</td><td>제보/신고</td><td>M-3~M+9</td></tr></table>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"사은품 가이드 위반",
+    cat:"유선", level1:"비정상 영업관리", level2:"사은품 가이드 위반",
     questions:["사은품 가이드 위반 시 어떻게 되나요","사은품 위반 패널티","사은품 상한 초과"],
     keywords:["사은품위반","사은품가이드","사은품상한"],
     answer:"<b>🎁 사은품 가이드 위반 관리 정책</b><br><br>• <b>사은품 오등록건:</b> 오등록 금액만큼 인센티브 재정산<br><br><b>📊 사은품 상한 Guide 초과 시 (유통망 추가 사은품 포함)</b><br><table><tr><th>구분</th><th>재정산 금액</th></tr><tr><td>번들</td><td>적발 건당 <b>10만원</b> 정액 재정산</td></tr><tr><td>동판</td><td>적발 건당 <b>20만원</b> 정액 재정산</td></tr></table>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"역외 가입",
+    cat:"유선", level1:"비정상 영업관리", level2:"역외 가입",
     questions:["역외 가입이 무엇인가요","역외 가입 기준이 뭔가요","역외 가입시 패널티가 있나요","역외 가입 예외 적용 대상 알려주세요"],
     keywords:["역외가입","역외판매","역외개통","타지역"],
     answer:"<b>📍 역외 가입 관리 정책</b><br><br>• <b>정의:</b> 본부 관할지역(서부-전남/전북/제주) 이외의 외부 지역 판매건<br><br><b>📊 실적 및 인센티브 기준</b><br><table><tr><th>구분</th><th>실적인정 대상</th><th>인센티브</th></tr><tr><td rowspan='2'>역외가입 예외</td><td>① 유무선 동시판매(UIT포함) / 유선+소호솔루션 / 유선+캡스(T안심보안) 동시판매건<br>※ 유선+캡스는 개통 익월 10일까지 서번 본사 제출 필수</td><td>지급</td></tr><tr><td>② 초고속 패밀리 요금제 판매건 (번들 포함)</td><td>지급</td></tr><tr><td>역외가입 (일반)</td><td>상기 이외 역외건</td><td><b>미지급</b></td></tr></table>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"고객 미동의 허위 판매",
+    cat:"유선", level1:"비정상 영업관리", level2:"고객 미동의 허위 판매",
     questions:["고객 미동의 가입시 패널티가 어떻게 되나요","고객미동의 가입 제재는 뭔가요","미동의 허위판매","가청약 가개통"],
     keywords:["고객미동의","미동의가입","가청약","가개통","허위판매"],
     answer:"<b>🚫 고객 미동의 허위 판매 관리 정책</b><br><br>• <b>정의:</b> 인센티브 및 청약/개통 정책 부당 수혜 목적으로 고객(회선명의자/집주인/거주자) 동의 없이 가청약/가개통하는 행위<br><br><b>📊 패널티</b><br><table><tr><th>구분</th><th>내용</th></tr><tr><td>실적 차감</td><td>적발 건당 <b>2배수</b> 실적 차감</td></tr><tr><td>재정산</td><td>건당 <b>50만원</b> 재정산</td></tr></table>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"본인확인 절차 강화",
+    cat:"유선", level1:"비정상 영업관리", level2:"본인확인 절차 강화",
     questions:["본인 미확인 판매 기준과 패널티가 무엇인가요","본인확인 절차 관리 강화 정책은 어떻게 되나요","신분증 스캐너 미사용 정책이 뭔가요","신분증 미비 적용대상과 기준은 어떻게 되나요"],
     keywords:["본인확인절차","신분증스캐너","모바일신분증","신분증미비"],
     answer:"<b>🪪 본인확인 절차 관리 강화 정책</b><br><br>• <b>목적:</b> 명의도용, 고객정보 부당거래 등 통신범죄 방지 및 유통망/고객 보호<br>• <b>대상 유형:</b> 초고속 단품 / 초고속+IPTV 번들 (IPTV 단품, 동판 제외)<br>• <b>대상 채널:</b> 전 채널 (Biz/제휴 제외)<br><br><b>📋 요건</b><br>청약일 ~ 개통당일까지 신분증 스캐너(모바일운전면허증, Pass운전면허증 포함) 스캔 필수 + CIA 심사 완비 필수<br><br><b>📊 패널티</b><br><table><tr><th>구분</th><th>내용</th></tr><tr><td>재정산 금액</td><td><b>10만원</b> (VAT 별도) 재정산</td></tr><tr><td>실적 차감</td><td>소성장 등 본사 정책 및 본부 KPI에서 <b>2배수 차감</b></td></tr><tr><td>적용 시기</td><td>개통월로부터 M+3월 소명 후 미소명건 적용</td></tr></table><br>⚠️ 개통월 기준 매장/판매점별 1건까지는 1배수 차감, 이후 2건부터 2배수 차감 (22.11.01 개통~)",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"신분증 스캐너 미사용 패널티",
+    cat:"유선", level1:"비정상 영업관리", level2:"신분증 스캐너 미사용 패널티",
     questions:["신분증 스캐너 미사용시 패널티가 어떻게 되나요","신분증 미비 패널티는 뭔가요"],
     keywords:["신분증스캐너패널티","신분증미비패널티","본인확인패널티"],
     answer:"<b>🪪 신분증 스캐너 미사용 패널티</b><br><br>• <b>재정산 금액:</b> 10만원 (VAT 별도)<br>• <b>실적차감:</b> 소성장 등 본사 정책과 본부 KPI에서 실적 2배수 차감 (22.3.24 청약~)<br>&nbsp;&nbsp;단, 개통월 기준 매장/판매점별 1건까지는 1배수 차감, 이후 2건부터 2배수 차감 (22.11.01 개통~)<br>• <b>Penalty 적용시기:</b> 개통월로부터 M+3월 소명 과정 후 미소명건 적용",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"판매 채널 Cheating",
+    cat:"유선", level1:"비정상 영업관리", level2:"판매 채널 Cheating",
     questions:["채널 치팅 기준과 패널티 알려주세요","채널 Cheating이 뭔가요","채널치팅"],
     keywords:["채널치팅","채널Cheating","가방판"],
     answer:"<b>🚨 판매 채널 Cheating 관리 정책</b><br><br><b>① 대형 유통 (유선전문매장 및 마트/양판점)</b><br>• 각 매장의 유선 가판 코드에 한정하여 입력 (이외 코드 등록건 지급 제외)<br>• 비정상 모니터링 적발건: 금액 미지급 (고객사은품, 모집수수료 포함 재정산)<br><br><b>② 가방판 운영</b><br>• 본부별 가방판(MC포함) 운영 계획 사전 본사 통보 및 사후 증빙 제출<br><br><b>📊 비정상 영업 행위 적발 시 패널티</b><br><table><tr><th>차수</th><th>패널티</th></tr><tr><td>1차 적발</td><td>서면 경고 + 해당실적 수수료 미지급</td></tr><tr><td>2차 적발</td><td>해당실적 수수료 2배 차감 + 전산차단 1일</td></tr><tr><td>3차 적발</td><td>대리점 계약 해지</td></tr></table>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"온라인 신청서(TWF)",
+    cat:"유선", level1:"비정상 영업관리", level2:"온라인 신청서(TWF)",
     questions:["온라인 신청서(TWF) 대상 알려주세요","TWF 가입 기준이 뭔가요","온라인 신청서(TWF) 기준 미준수 패널티는 뭔가요","단골 가입 후 TWF 가입 기간"],
     keywords:["온라인신청서","TWF","단골등록"],
     answer:"<b>💻 온라인 신청서(TWF) 관리 정책</b><br><br>• <b>목적:</b> TWF 온라인 신청서 가입 시 고객정보 부당거래 등 통신범죄 방지<br><br><b>📋 대상 유형 및 기준</b><br><table><tr><th>유형</th><th>단골등록 후 가입 가능 기간</th></tr><tr><td>TWF 기변 동판건</td><td>단골등록 <b>D+7일</b> 이후</td></tr><tr><td>TWF MNP 및 번들</td><td>단골등록 <b>D+14일</b> 이후</td></tr></table><br><b>📊 패널티 (미준수 시)</b><br>• 실적 미인정 (본부 KPI, 소성장)<br>• 인센 <b>10만원</b> 재정산<br>• 적용시점: 개통 익익월 재정산 진행, 개통 당월 실적 미인정",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"유통망 Conflict",
+    cat:"유선", level1:"비정상 영업관리", level2:"유통망 Conflict",
     questions:["타 유통망 선청약건에 대해 접수취소 후 재청약 가능한가요","접수 취소 후 재청약 가능기간이 어떻게 되나요","유통망 Conflict","고객 가로채기"],
     keywords:["유통망conflict","타유통망청약","접수취소","고객가로채기"],
     answer:"<b>⚡ 유통망 Conflict 관리 정책</b><br><br>• <b>정의:</b> SKT 선청약 고객 건에 대해 타 유통점의 후청약 개통건 (고객 가로채기 개통)<br><br><b>📋 판정 기준</b><br>• SKT유통망(CRM포함) 접수 취소일 기준 <b>D+7일 내</b> 유통망 청약 & 당월 개통건<br>• 동일명의 건: <b>무소명 재정산 확정</b><br>• 가족명의 건: 소명 후 검증 완료 건 재정산 확정<br><br><b>📊 패널티</b><br>• 인센티브/실적: 본사정책 지급액/실적 <b>1배수 차감</b>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"비대면 재약정",
+    cat:"유선", level1:"비정상 영업관리", level2:"비대면 재약정",
     questions:["온라인·TM 재약정은 실적 미인정 및 인센 미지급입니다","비대면 재약정","온라인 재약정","TM 재약정"],
     keywords:["비대면재약정","온라인재약정","TM재약정"],
     answer:"<b>📵 비대면 재약정 관리 정책</b><br><br>• 온라인, TM 등 <b>비대면 채널</b>을 통한 재약정<br>• <b>실적 미인정</b> 및 <b>인센 미지급</b>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"허위 수용불가/명의변경 해지 개요",
+    cat:"유선", level1:"비정상 영업관리", level2:"허위 수용불가/명의변경 해지 개요",
     questions:["허위 수용불가 해지가 무엇인가요","허위 수용불가"],
     keywords:["허위수용불가해지","명의변경해지"],
     answer:"<b>🚫 허위 수용불가 & 명의변경 해지 개요</b><br><br>• 수용불가 지역으로 허위 이전 신청 후 이를 근거로 해지하거나, 위면해지/직권해지 목적으로 명의변경 후 해지하는 건<br>• 해지 시점으로부터 과거 1년간 '동일주소&동일유통망' 2회 이상 발생 건<br>• 해지 시점으로부터 과거 1년간 '명의변경 후 위면해지/직권해지'가 2회 이상 발생 유통점<br>• <b>건당 50만원 정액 재정산</b>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"허위 수용불가/명의변경 해지 세부",
+    cat:"유선", level1:"비정상 영업관리", level2:"허위 수용불가/명의변경 해지 세부",
     questions:["허위 수용불가 해지나 명의변경 해지 적발 시 제재는","허위 수용불가 해지 기준과 패널티가 무엇인가요","수용불가 해지 기준"],
     keywords:["허위수용불가","명의변경해지","수용불가해지","허위이전"],
     answer:"<b>🚫 허위 수용불가 & 허위 명의변경 해지 관리정책</b><br><br><b>① 허위 수용불가 해지</b><br>가입 후 수용불가 지역으로 이사하지 않았음에도 이를 근거로 해지하는 경우<br><br><b>② 허위 명의변경 해지</b><br>사망자, 이민자, 군입대자 등에게 명의변경 후 위면해지/직권해지를 유발하는 경우<br><br><b>📋 치팅 의심건 선별 기준</b><br>• 해지 시점으로부터 과거 1년 내 '동일장소&동일유통망' 2회 이상 발생<br>• 동일유통망에서 개통 후 1년 내 수용불가 해지 2회 이상 발생<br>• 해지 시점으로부터 과거 1년 내 '명의변경 후 위면해지/직권해지' 2회 이상 발생<br><br><b>📊 패널티</b><br>• 유통망 소명 후 확정 건당 <b>50만원</b> + <b>2배 실적</b> 재정산",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
   {
-    level1:"비정상 영업관리 정책", level2:"허위 판매(청약/개통)",
+    cat:"유선", level1:"비정상 영업관리", level2:"허위 판매(청약/개통)",
     questions:["고객 동의 없이 개통하면","미동의 허위판매 제재는","허위판매"],
     keywords:["허위판매","가개통","가청약"],
     answer:"<b>🚫 허위 판매(청약/개통) 관리 정책</b><br><br>• 인센티브 및 청약/개통 정책 부당 수혜 목적의 허위 판매(청약/개통) 건<br>• 고객(회선명의자/집주인/거주자) 미동의 하에 가청약/가개통 적발 시<br>&nbsp;&nbsp;→ 적발 건당 <b>실적 2배수 차감</b> 및 <b>50만원 재정산</b>",
     source:"본사_2604_비정상영업관리정책_4-1호"
   },
-  // ── 시장 안정화 정책 ──
+  // ── [유선] 시장 안정화 정책 ──
   {
-    level1:"시장 안정화 정책", level2:"시장 안정화 정책 개요",
+    cat:"유선", level1:"시장 안정화 정책", level2:"시장 안정화 정책 개요",
     questions:["유선 시장 안정화 정책이 무엇인가요","시장 안정화 정책"],
     keywords:["시장안정화"],
     answer:"<b>📊 유선 시장 안정화 정책 개요</b><br><br>• <b>목적:</b> 유통망 R/B 및 경품 Guide 운영을 통한 이용자 차별 최소화<br>• Guide 준수를 위한 유통망 자정 활동 유도<br>• 도매 R/B 가이드와 경품 가이드 운영<br>• 경품 가이드는 상품별 하한과 상한으로 운영",
     source:"26년 4월 유선 시장 안정화 정책 (4-2호)"
   },
   {
-    level1:"시장 안정화 정책", level2:"유선 경품 가이드",
+    cat:"유선", level1:"시장 안정화 정책", level2:"유선 경품 가이드",
     questions:["유선 경품 가이드는 어떻게 되나요","경품 상한 하한 기준","경품가이드"],
     keywords:["경품가이드","경품상한","경품하한"],
     answer:"<b>🎁 유선 경품 Guide</b><br><br><table><tr><th>구분</th><th>초고속 상품</th><th>하한</th><th>상한</th></tr><tr><td rowspan='2'>초고속 단품</td><td>광랜 기준</td><td>9만원</td><td>11만원</td></tr><tr><td>기가 기준</td><td>13만원</td><td>17만원</td></tr><tr><td rowspan='3'>번들(I+T)</td><td>광랜 기준</td><td>30만원</td><td>40만원</td></tr><tr><td>500M 기준</td><td>33만원</td><td>43만원</td></tr><tr><td>1G 기준</td><td>37만원</td><td>49만원</td></tr><tr><td rowspan='2'>동판(M+I+T)</td><td>광랜 기준</td><td>32만원</td><td>42만원</td></tr><tr><td>기가 기준</td><td>50만원</td><td>67만원</td></tr></table><br>⚠️ 매장 VMD 내 경품 Guide 상한 금액 초과 표기 금지<br>⚠️ 고객 경품 안내 시 상/하한 가이드 준수 (모니터링 적발 시 패널티 부여)",
     source:"26년 4월 유선 시장 안정화 정책 (4-2호)"
   },
   {
-    level1:"시장 안정화 정책", level2:"허위과장광고",
+    cat:"유선", level1:"시장 안정화 정책", level2:"허위과장광고",
     questions:["허위과장광고 패널티는 어떻게 되나요","허위과장광고"],
     keywords:["허위과장광고","패널티","채증"],
     answer:"<b>📢 허위과장광고 적발점 패널티</b><br><br>• 당월 KAIT 채증 통보 건당 소매성장 정책 유선포인트 <b>-1 P/건</b> 적용<br>• 해당 마케팅팀 초고속 KPI -1건 적용<br>• 온라인 채증건(당근마켓, 네이버 등 포함)은 '24년 3월 1일~채증건부터 적용<br><br>• <b>반영 기준:</b> KAIT 허위과장광고 주간 채증 결과<br>&nbsp;&nbsp;('26년 3월 4주차 ~ 4월 3주차 채증 결과 적용)",
     source:"26년 4월 유선 시장 안정화 정책 (4-2호)"
   },
   {
-    level1:"시장 안정화 정책", level2:"온라인(매집) 패널티",
+    cat:"유선", level1:"시장 안정화 정책", level2:"온라인(매집) 패널티",
     questions:["온라인(매집) 영업시 패널티는 어떻게 되나요","매집 패널티","온라인 매집"],
     keywords:["매집","온라인매집"],
     answer:"<b>🚫 온라인(매집) 영업 금지 위반 시 패널티</b><br><br>• 미신고 대리점이 경로와 유치조건 등을 알 수 없는 가입자를 타 유통망 또는 개인으로부터 매집하는 행위 금지<br>• <b>패널티:</b> 실채증 적발 건당 담당조직별 초고속 <b>40건 하향조정</b>",
     source:"26년 4월 유선 시장 안정화 정책 (4-2호)"
   },
   {
-    level1:"시장 안정화 정책", level2:"경품 가이드 위반 패널티",
+    cat:"유선", level1:"시장 안정화 정책", level2:"경품 가이드 위반 패널티",
     questions:["유선 경품 가이드 위반시 패널티는 어떻게 되나요","경품 위반 패널티"],
     keywords:["경품패널티","경품위반"],
     answer:"<b>⚠️ 경품 Guide 위반 유통망 패널티</b><br><br><table><tr><th>위반 사항</th><th>패널티</th></tr><tr><td>매장(온라인 포함) VMD 경품 표기</td><td>최초 적발 시 경고 조치 및 재발 방지 계획 제출 필수<br>재적발 시 패널티 부여 (소매매장 & 하한 위반은 최초 적발 시에도 패널티 가능)</td></tr><tr><td>온라인 경품</td><td>적발 건당 실채증 비용 <b>50만원</b> 재정산</td></tr></table><br>⚠️ 허위 조치, D+30 이내 동일 대리점 재적발, VMD 경품 표기 적발 당일 내 미조치 시 패널티 2배수 적용",
     source:"26년 4월 유선 시장 안정화 정책 (4-2호)"
   },
-  // ── 가용/공사/설치 ──
+  // ── [유선] 가용/공사/설치 ──
   {
-    level1:"가용/공사/설치", level2:"비가용 실사요청",
+    cat:"유선", level1:"가용/공사/설치", level2:"비가용 실사요청",
     questions:["유선 비가용 주소로 확인 되는 경우 어떻게 해야 하나요","비가용 주소 처리","비가용 실사"],
     keywords:["비가용","실사","비가용주소"],
     answer:"<b>🔍 유선 비가용 주소 처리 방법</b><br><br>스윙-가용조회 화면에서 비가용으로 조회되는 경우 팝업으로 <b>'인터넷 비가용 주소지입니다. 현장실사요청을 진행하시겠습니까?'</b> 라고 안내됩니다.<br><br>• <b>공사 가능한 주소지:</b> 사전청약 안내<br>• <b>공사 불가능한 주소지:</b> 개통불가 회신",
     source:"마케터Q&A"
   },
   {
-    level1:"가용/공사/설치", level2:"공사비 기준",
+    cat:"유선", level1:"가용/공사/설치", level2:"공사비 기준",
     questions:["유선 비가용 주소에 대해 공사가 필요하다고 하는데 공사비 기준은 어떻게 되나요","공사비 기준","비가용 공사비"],
     keywords:["공사비기준","비가용공사","공사비"],
     answer:"<b>🔧 유선 비가용 공사비 기준</b><br><br><table><tr><th>조건</th><th>공사비</th></tr><tr><td>유무선결합 & TV 동시청약 (상품 무관)</td><td><b>300만원</b></td></tr><tr><td>Giga라이트 이상 & All 상품 (유무선결합 아닌 경우)</td><td><b>300만원</b></td></tr><tr><td>소상공인 (인터넷만 신청해도)</td><td><b>300만원</b></td></tr><tr><td>그 외</td><td><b>150만원</b></td></tr></table><br>⚠️ 유무선 결합은 동판(동시판매)이 아닌 이동전화와 결합만 하면 됩니다.<br>⚠️ 실사요청 시 동판여부 반드시 Y로 체크해야 유무선결합기준(300만원) 공사비로 사전청약 가능",
     source:"마케터Q&A"
   },
   {
-    level1:"가용/공사/설치", level2:"공사 협조 요청",
+    cat:"유선", level1:"가용/공사/설치", level2:"공사 협조 요청",
     questions:["공사가 급하게 필요하다고 하는데 어떻게 해야 하나요","공사 협조 요청","공사 일정"],
     keywords:["공사일정","공사협조","공사요청"],
     answer:"<b>🔧 유선 공사 협조 요청 방법</b><br><br>아래 양식에 작성하여 <b>유선 담당마케터(한동철M)</b>에게 카톡 송부<br><br>■ 유선 공사 협조 요청 양식<br>• 요청 대리점 / 담당자:<br>• 서비스관리번호:<br>• 주소:<br>• 청약일자:<br>• 요청사유:<br>• 공사완료 희망 요청일:",
     source:"마케터Q&A"
   },
   {
-    level1:"가용/공사/설치", level2:"설치 일정 조율",
+    cat:"유선", level1:"가용/공사/설치", level2:"설치 일정 조율",
     questions:["설치를 빠르게 할 수 있는 방법이 있나요","당일 개통(설치) 가능한가요","설치 일정","개통 일정"],
     keywords:["설치일정","개통일정","당일개통"],
     answer:"<b>📅 유선 개통(설치) 일정 조율 방법</b><br><br>아래 양식에 작성하여 <b>유선 담당마케터(한동철M)</b>에게 카톡 송부<br><br>■ 유선 개통 요청 양식<br>• 요청 대리점 / 담당자:<br>• 서비스관리번호:<br>• 주소:<br>• 청약일자:<br>• 요청사유:<br>• 개통 희망 요청일:<br>• 고객가능 스케줄 (일자, 시간대):",
     source:"마케터Q&A"
+  },
+  // ── [유선] 매장 시연 회선 ──
+  {
+    cat:"유선", level1:"매장 시연 회선", level2:"시연회선 개요",
+    questions:["매장 시연회선이 뭔가요","매장 신규 개설시 Btv(IPTV) 무료 제공되나요","매장에 Btv 시연하고 싶어요","시연회선이란"],
+    keywords:["시연회선","신규매장","무료제공","시연"],
+    answer:"<b>📺 매장 시연회선 개요</b><br><br>• <b>정의:</b> SKT대리점 내 유선 상품을 시연하고 고객에 노출할 수 있도록 SKB에서 초고속, IPTV, 다셋탑의 이용 요금(기본료, 임대료, 설치비 포함)을 <b>무료로 지원</b>하는 SKB 회선<br><br>• <b>지원 기준:</b> 전년도 1년 동안(7월~6월) IPTV 개통 실적 달성 시 익년 요금 무료 지원<br>• <b>지원 방법:</b> 시연 회선 전용 할인오퍼 적용을 통한 요금 미발생 (매출 할인)<br><br>⚠️ 매장 내 고객 시연을 위한 용도로만 사용 가능 (개인 사용 불가)<br>⚠️ 실적 Hurdle 충족 못할 시 일반 고객과 동일하게 요금 발생<br>⚠️ SKB 지원 기준에 부합하는 유선 요금제/STB만 요금 지원 가능 (재판매 회선 불가)",
+    source:"T대리점 시연회선 운영(안)_250210"
+  },
+  {
+    cat:"유선", level1:"매장 시연 회선", level2:"시연회선 요금 지원",
+    questions:["매장 시연회선 요금 지원 기준은 어떻게 되나요","시연회선 무료로 사용하려면 조건이 뭔가요","시연회선 지원 조건이 어떻게 되나요","시연회선 요금제는 어떻게 되나요","시연회선은 몇회선 지원되나요"],
+    keywords:["시연회선지원기준","시연회선요금","요금지원","시연회선조건"],
+    answer:"<b>📋 시연회선 요금 지원 기준</b><br><br>• <b>실적 허들:</b> 시연회선 수에 관계 없이 매장별 Hurdle 최대 6건으로 운영<br>&nbsp;&nbsp;- 시연회선 신청 매장이 '24.7월~'25.6월 기간 내 허들 충족 시 '25.7월~'26.6월 요금 지원<br><br><b>📊 Case별 지원 조건</b><br><table><tr><th>Case</th><th>기본회선 지원</th><th>다셋톱 지원</th></tr><tr><td>신설매장</td><td>현 Guide Line 내 지원 가능</td><td>연간 IPTV 6건 충족 시 요금 지원</td></tr><tr><td>리뉴얼 매장 (지원 연장)</td><td>현 Guide Line 내 지원 가능</td><td>동일</td></tr><tr><td>리뉴얼 매장 (지원 종료)</td><td>요금 미지원</td><td>-</td></tr></table><br><b>📊 가입 기간별 실적 허들</b><br><table><tr><th>가입 기간</th><th>실적 허들</th></tr><tr><td>25.05~25.06월 가입</td><td>1건</td></tr><tr><td>25.03~25.04월 가입</td><td>2건</td></tr><tr><td>25.01~25.02월 가입</td><td>3건</td></tr><tr><td>24.11~24.12월 가입</td><td>4건</td></tr><tr><td>24.09~24.10월 가입</td><td>5건</td></tr><tr><td>이전~24.08월 가입</td><td>6건</td></tr></table><br>• <b>지원 서비스:</b> (초고속) Giga라이트, (IPTV) B tv All + AI2 STB, (WiFi) Giga WiFi<br>• <b>지원 요금:</b> 기본료(초고속/IPTV), 임대료(STB/WiFi), 설치비 ※ VOD 이용료 미지원",
+    source:"T대리점 시연회선 운영(안)_250210"
+  },
+  {
+    cat:"유선", level1:"매장 시연 회선", level2:"시연회선 청약",
+    questions:["시연회선 청약시 필요서류는 뭐가 있나요","시연회선 신청 어떻게 하나요"],
+    keywords:["시연회선청약","시연회선서류","시연회선신청"],
+    answer:"<b>📝 시연회선 청약 시 필수 서류</b><br><br><table><tr><th>구분</th><th>상세</th></tr><tr><td>필수 서류 ①</td><td>필수 정보가 기재된 엑셀 (유선 담당 마케터에게 요청)</td></tr><tr><td>필수 서류 ②</td><td>가입신청서</td></tr><tr><td>선택 정보</td><td>스윙 청약을 위한 가입자 정보 (개인 혹은 법인에 따라 상이)</td></tr></table><br>⚠️ 유통망의 시연회선 신청 시 엑셀 내 기재된 안내사항 공유 필수",
+    source:"T대리점 시연회선 운영(안)_250210"
+  },
+  {
+    cat:"유선", level1:"매장 시연 회선", level2:"시연회선 해지",
+    questions:["매장 폐쇄로 시연회선 해지해야 하는데 어떻게 하나요","시연 회선 해지하고 싶어요","시연회선 해지 방법 알려주세요"],
+    keywords:["시연회선해지","시연회선폐쇄"],
+    answer:"<b>📝 시연회선 해지 방법</b><br><br><table><tr><th>구분</th><th>상세</th></tr><tr><td>필수 서류 ①</td><td>필수 정보가 기재된 엑셀 (유선 담당 마케터에게 요청)</td></tr><tr><td>필수 서류 ②</td><td>매장 폐쇄 확인서 (품의서 또는 스윙 정보)</td></tr><tr><td>선택 정보</td><td>스윙 해지를 위한 가입자 정보 (개인 혹은 법인에 따라 상이)</td></tr></table><br>⚠️ 유통망의 시연회선 해지 신청 시 엑셀 내 기재된 안내사항 공유 필수",
+    source:"T대리점 시연회선 운영(안)_250210"
+  },
+  // ── [이동전화] CIA 심사 ──
+  {
+    cat:"이동전화", level1:"CIA 심사", level2:"CIA 심사 목적",
+    questions:["CIA 심사목적이 뭔가요","CIA 심사 왜 하나요","CIA가 뭔가요"],
+    keywords:["CIA","심사목적","CIA심사"],
+    answer:"<b>🔍 CIA 심사 목적</b><br><br><b>CIA = Customer Information Acquisition & Management</b><br><br>• 이미지화 신청서 및 구비서류 심사를 통해 유통망의 업무 Quality 관리<br>• 향후 발생 가능한 고객불만에 대비하여 불/편법 영업에 대한 사전관리 지원",
+    source:"26년 4월 CIA 심사 정책"
+  },
+  {
+    cat:"이동전화", level1:"CIA 심사", level2:"CIA 심사 대상",
+    questions:["CIA 심사 대상은","CIA 심사하는 업무는 무엇","CIA 심사 대상 업무 알려주세요"],
+    keywords:["CIA심사대상","CIA심사내용","CIA업무"],
+    answer:"<b>📋 CIA 심사 대상 및 내용</b><br><br><table><tr><th>업무</th><th>신청서 종류</th><th>심사내용</th></tr><tr><td>신규/명의변경</td><td>이동전화 가입(선불/후불)<br>이동전화 명의변경<br>유선 재판매 신규</td><td>• 신청서 및 구비서류 심사<br>- 전산/신청서/신분증 일치여부 확인<br>- 필수 항목 동의 및 서명 여부<br>• 대내외 신고 대응 심사<br>- 표준안내서 첨부 여부<br>- 신분증 스캐너 사용 여부</td></tr><tr><td>결합/할인 상품</td><td>이동전화/유선 재판매 복지할인<br>이동전화 환불<br>온가족할인, 요즘가족할인 등</td><td>심사결과 비정상인 경우 할인혜택 자동 삭제</td></tr><tr><td>기타</td><td>할부매매계약서<br>OMD단말가입 확인서<br>단말기/USIM변경신청서</td><td>-</td></tr></table>",
+    source:"26년 4월 CIA 심사 정책"
+  },
+  {
+    cat:"이동전화", level1:"CIA 심사", level2:"CIA 정책 및 완비율",
+    questions:["CIA 정책은 뭐가 있나요","CIA 심사종류 알려주세요","CIA 완비율 기준 궁금해요","CIA 완비율 구간 확인해 주세요"],
+    keywords:["CIA정책","CIA완비율","CIA패널티","완비율기준"],
+    answer:"<b>📊 CIA 정책 및 완비율 Grade</b><br><br><b>① 신규 정책 (26.3.1~)</b><br>• 기기변경 전수 심사 전환 (기존 Sample 심사 → 전수심사)<br>• 신청서 고객명/서명 심사 강화: 고객 본인 자필 기입 필수, 특수문자/기호 사용 불가<br><br><b>② 안면인증 시범서비스 연장 ('25.12.23~'26.6.30)</b><br>• 보이스피싱/명의도용 예방 목적, 통신 3사 공동 시행<br>• 업무유형: 신규, 번호이동, 명의변경<br>• 안면인증은 신분증 스캔과 별도 단계 (기존과 동일하게 신분증 스캔 필수)<br><br><b>③ 완비율 Grade 정책 (관리목표: 96%)</b><br><table><tr><th>구분/완비율</th><th>98%이상</th><th>96%이상</th><th>90%이상</th><th>90%미만</th></tr><tr><td>무선 신규/명변/기변</td><td>5천원</td><td>15천원</td><td>25천원</td><td>40천원</td></tr><tr><td>유선 재판매</td><td>3천원</td><td>5천원</td><td>10천원</td><td>20천원</td></tr><tr><td>단말할부/기변OMD</td><td colspan='4'>15천원 (미비건당 일괄 적용)</td></tr><tr><td>대리인 구비서류 미비</td><td colspan='4'>70천원 (추가 패널티, 무선만 적용)</td></tr><tr><td>신분증/구비서류 위변조</td><td colspan='4'>150천원 (위변조건 추가 패널티)</td></tr></table>",
+    source:"26년 4월 CIA 심사 정책"
+  },
+  {
+    cat:"이동전화", level1:"CIA 심사", level2:"신분증 위변조 패널티",
+    questions:["신분증 위변조 패널티 어떻게 되나요","신분증 위변조 패널티 내용 확인해 주세요","구비서류 위변조 패널티"],
+    keywords:["신분증위변조","위변조패널티","구비서류위변조"],
+    answer:"<b>🚨 신분증/구비서류 위변조 의심건 패널티</b><br><br>• 신분증: '22년 5월 1일 영업분~, 구비서류: '22년 6월 1일 영업분~<br><br><b>📊 패널티 내용 (기존 건당 15만원 + 추가 패널티)</b><br><table><tr><th>적발 회차</th><th>패널티</th></tr><tr><td>1회 적발</td><td>적발 즉시 해당 매장 <b>경고</b></td></tr><tr><td>2회 적발</td><td>해당 매장 익월 영업분 소매성장정책 <b>1개월 미지급</b></td></tr><tr><td>3회 적발</td><td>해당 매장 익월 영업분부터 소매성장정책 <b>3개월 미지급</b></td></tr></table><br>⚠️ 기존 CIA 패널티 건당 15만원은 별도 적용<br>⚠️ 패널티 누적 기간: 매년 1월~12월 영업분 누적<br>⚠️ 위변조 심사: 신분증 스캔 이미지 임의수정, 복사의심, 정렬 불일치 등 다양한 방식으로 판정",
+    source:"26년 4월 CIA 심사 정책"
+  },
+  {
+    cat:"이동전화", level1:"CIA 심사", level2:"유선재판매 CIA",
+    questions:["유선재판매 CIA 심사 기준은","유선 CIA 심사 기준","초고속 CIA 심사"],
+    keywords:["유선재판매CIA","유선CIA","재판매CIA","초고속CIA","인터넷CIA"],
+    answer:"<b>📋 유선재판매 CIA 심사기준</b><br><br>• 유선재판매건도 전자신청서와 일반신청서로 구분하여 무선과 동일한 기준으로 심사 진행<br><br><b>📊 변경 심사 기준 내용 ('22년 5월 1일 심사분~)</b><br><table><tr><th>구분</th><th>변경 전</th><th>변경 후</th></tr><tr><td>신분증 심사 인정기준</td><td>스캔, 복사, 팩스본 인정</td><td>신분증 스캐너로 스캔한 신분증만 인정<br>※ 여권은 신분증 인정 불가</td></tr><tr><td>신청서 심사 기준</td><td>일부 미첨부 시 2차심사 전까지 첨부 시 인정</td><td>신청서 2차심사 미인정 (개통 시 신청서 필수 첨부)</td></tr><tr><td>외국인 신분증</td><td>여권, 국내운전면허증 인정</td><td>외국인등록증, 국내거소신고증 등 인정<br>(여권, 국내운전면허증은 인정불가)</td></tr><tr><td>법인 구비서류</td><td>발급일자 무관하게 인정</td><td>90일 이내 발급된 서류만 유효</td></tr></table>",
+    source:"26년 4월 CIA 심사 정책"
   }
 ];
 
 // =============================================
-// 상태 관리
+// 메뉴 구조 정의
 // =============================================
-var selectedLevel1 = null;
-var activeTabId = 'tab-all';
+var menuStructure = {
+  'all': {
+    tabs: [
+      {id:'tab-all-sub', label:'📋 전체보기', level1:'all'}
+    ]
+  },
+  '이동전화': {
+    tabs: [
+      {id:'tab-mob-all', label:'📋 전체', level1:'all_mobile'},
+      {id:'tab-cia', label:'🔍 CIA 심사', level1:'CIA 심사'}
+    ]
+  },
+  '유선': {
+    tabs: [
+      {id:'tab-wire-all', label:'📋 전체', level1:'all_wire'},
+      {id:'tab-iptv', label:'📺 IPTV 할인오퍼', level1:'IPTV 할인오퍼'},
+      {id:'tab-abnormal', label:'⚠️ 비정상 영업관리', level1:'비정상 영업관리'},
+      {id:'tab-market', label:'📊 시장 안정화', level1:'시장 안정화 정책'},
+      {id:'tab-install', label:'🔧 가용/공사/설치', level1:'가용/공사/설치'},
+      {id:'tab-demo', label:'📺 매장 시연 회선', level1:'매장 시연 회선'}
+    ]
+  }
+};
 
-// 메뉴별 빠른 질문 (최대 3개, 키워드 간략)
 var quickBtnMap = {
   'all': [
+    {label:'📱 CIA 심사', q:'CIA 심사목적이 뭔가요'},
+    {label:'📺 IPTV 오퍼', q:'IPTV 할인오퍼 종류가 어떤게 있나요'},
+    {label:'⚠️ 단기해지', q:'단기해지 기준은 어떻게 되나요'}
+  ],
+  '이동전화': [
+    {label:'🔍 CIA 목적', q:'CIA 심사목적이 뭔가요'},
+    {label:'📋 CIA 대상', q:'CIA 심사 대상은'},
+    {label:'🚨 위변조 패널티', q:'신분증 위변조 패널티 어떻게 되나요'}
+  ],
+  'CIA 심사': [
+    {label:'🔍 CIA 목적', q:'CIA 심사목적이 뭔가요'},
+    {label:'📋 CIA 대상', q:'CIA 심사 대상은'},
+    {label:'📊 완비율 기준', q:'CIA 완비율 기준 궁금해요'}
+  ],
+  '유선': [
     {label:'📺 IPTV 오퍼', q:'IPTV 할인오퍼 종류가 어떤게 있나요'},
     {label:'⚠️ 단기해지', q:'단기해지 기준은 어떻게 되나요'},
     {label:'🎁 경품가이드', q:'유선 경품 가이드는 어떻게 되나요'}
@@ -453,7 +547,7 @@ var quickBtnMap = {
     {label:'🍎 애플TV 할인', q:'Apple TV 할인 프로모션이 있나요'},
     {label:'💼 힘내CEO', q:'소상공인 1년약정 상품이 무엇인가요'}
   ],
-  '비정상 영업관리 정책': [
+  '비정상 영업관리': [
     {label:'⚠️ 단기해지', q:'단기해지 기준은 어떻게 되나요'},
     {label:'🔄 재가입 패널티', q:'초고속 재가입 패널티는 어떻게 되나요'},
     {label:'🪪 신분증 패널티', q:'신분증 스캐너 미사용시 패널티가 어떻게 되나요'}
@@ -467,35 +561,92 @@ var quickBtnMap = {
     {label:'🔍 비가용 실사', q:'유선 비가용 주소로 확인 되는 경우 어떻게 해야 하나요'},
     {label:'🔧 공사비 기준', q:'유선 비가용 주소에 대해 공사가 필요하다고 하는데 공사비 기준은 어떻게 되나요'},
     {label:'📅 설치 일정', q:'설치를 빠르게 할 수 있는 방법이 있나요'}
+  ],
+  '매장 시연 회선': [
+    {label:'📺 시연회선 개요', q:'매장 시연회선이 뭔가요'},
+    {label:'📋 지원 기준', q:'매장 시연회선 요금 지원 기준은 어떻게 되나요'},
+    {label:'📝 청약 서류', q:'시연회선 청약시 필요서류는 뭐가 있나요'}
   ]
 };
 
 // =============================================
-// 메뉴 선택
+// 상태 관리
 // =============================================
-function selectMenu(name, tabId) {
-  // 탭 활성화
-  document.querySelectorAll('.menu-tab').forEach(function(t){ t.classList.remove('active'); });
-  document.getElementById(tabId).classList.add('active');
-  activeTabId = tabId;
+var selectedCat = 'all';
+var selectedLevel1 = null;
+var activeCatId = 'cat-all';
+var activeTabId = 'tab-all-sub';
+
+// =============================================
+// 업무구분(카테고리) 선택
+// =============================================
+function selectCategory(cat, catId) {
+  document.querySelectorAll('.category-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById(catId).classList.add('active');
+  activeCatId = catId;
+  selectedCat = cat;
+  selectedLevel1 = null;
+
+  // LEVEL1 탭 렌더링
+  renderMenuTabs(cat);
 
   var bar = document.getElementById('selectedMenuBar');
-  if (name === 'all') {
-    selectedLevel1 = null;
-    bar.classList.remove('show');
+  bar.classList.remove('show');
+
+  if(cat === 'all') {
     updateQuickBtns('all');
     addBotMessage('전체 범위에서 검색합니다. 🔍<br>질문을 입력하거나 아래 버튼을 눌러보세요!', null);
   } else {
-    selectedLevel1 = name;
-    document.getElementById('selectedMenuText').textContent = '📁 ' + name + ' 범위에서 검색 중';
-    bar.classList.add('show');
-    updateQuickBtns(name);
-    addBotMessage('<b>📁 "' + name + '"</b> 메뉴가 선택되었습니다.<br>해당 메뉴 내에서 우선 검색하여 답변드릴게요! 😊', null);
+    updateQuickBtns(cat);
+    addBotMessage('<b>' + (cat==='이동전화'?'📱':'🌐') + ' "' + cat + '"</b> 업무 범위가 선택되었습니다.<br>하위 메뉴를 선택하거나 바로 질문해 주세요! 😊', null);
   }
 }
 
-function updateQuickBtns(name) {
-  var btns = quickBtnMap[name] || quickBtnMap['all'];
+function renderMenuTabs(cat) {
+  var tabs = menuStructure[cat] ? menuStructure[cat].tabs : menuStructure['all'].tabs;
+  var html = '';
+  tabs.forEach(function(t, i) {
+    var active = i===0 ? ' active' : '';
+    html += '<div class="menu-tab'+active+'" id="'+t.id+'" onclick="selectMenu(\''+t.level1+'\',\''+t.id+'\')">' + t.label + '</div>';
+  });
+  document.getElementById('menuTabs').innerHTML = html;
+  if(tabs.length > 0) {
+    activeTabId = tabs[0].id;
+  }
+}
+
+// =============================================
+// LEVEL1 메뉴 선택
+// =============================================
+function selectMenu(level1, tabId) {
+  document.querySelectorAll('.menu-tab').forEach(function(t){ t.classList.remove('active'); });
+  var el = document.getElementById(tabId);
+  if(el) el.classList.add('active');
+  activeTabId = tabId;
+
+  var bar = document.getElementById('selectedMenuBar');
+
+  if(level1 === 'all' || level1 === 'all_mobile' || level1 === 'all_wire') {
+    selectedLevel1 = null;
+    bar.classList.remove('show');
+    var catLabel = selectedCat === 'all' ? '전체' : selectedCat;
+    updateQuickBtns(selectedCat === 'all' ? 'all' : selectedCat);
+    addBotMessage('<b>' + catLabel + '</b> 전체 범위에서 검색합니다. 🔍<br>질문을 입력하거나 아래 버튼을 눌러보세요!', null);
+  } else {
+    selectedLevel1 = level1;
+    document.getElementById('selectedMenuText').textContent = '📁 ' + level1 + ' 범위에서 검색 중';
+    bar.classList.add('show');
+    updateQuickBtns(level1);
+    addBotMessage('<b>📁 "' + level1 + '"</b> 메뉴가 선택되었습니다.<br>해당 메뉴 내에서 우선 검색하여 답변드릴게요! 😊', null);
+  }
+}
+
+function resetToAll() {
+  selectCategory('all', 'cat-all');
+}
+
+function updateQuickBtns(key) {
+  var btns = quickBtnMap[key] || quickBtnMap['all'];
   var html = btns.map(function(b){
     return '<span class="quick-btn" onclick="quickAsk(\'' + b.q.replace(/'/g,"\\'") + '\')">' + b.label + '</span>';
   }).join('');
@@ -505,115 +656,128 @@ function updateQuickBtns(name) {
 // =============================================
 // 검색 엔진
 // =============================================
+function _s(v){return v.toLowerCase().replace(/\s/g,'');}
+
 function searchAnswer(query) {
-  var q = query.toLowerCase().replace(/\s/g,'');
-  var pool = selectedLevel1 ? qaDB.filter(function(d){ return d.level1 === selectedLevel1; }) : qaDB;
+  var q = _s(query);
+
+  // 검색 풀 결정
+  var pool;
+  if(selectedLevel1) {
+    pool = qaDB.filter(function(d){ return d.level1 === selectedLevel1; });
+  } else if(selectedCat && selectedCat !== 'all') {
+    pool = qaDB.filter(function(d){ return d.cat === selectedCat; });
+  } else {
+    pool = qaDB;
+  }
 
   // 1단계: 정확 매칭
-  for (var i=0; i<pool.length; i++) {
-    for (var j=0; j<pool[i].questions.length; j++) {
-      var nq = pool[i].questions[j].toLowerCase().replace(/\s/g,'');
-      if (q.includes(nq) || nq.includes(q)) return {type:'exact', data:pool[i]};
+  for(var i=0;i<pool.length;i++){
+    for(var j=0;j<pool[i].questions.length;j++){
+      var nq=_s(pool[i].questions[j]);
+      if(q.includes(nq)||nq.includes(q)) return {type:'exact',data:pool[i]};
     }
   }
 
   // 2단계: 키워드 매칭
-  var bestMatch=null, bestScore=0;
-  for (var i=0; i<pool.length; i++) {
+  var bestMatch=null,bestScore=0;
+  for(var i=0;i<pool.length;i++){
     var score=0;
-    for (var k=0; k<pool[i].keywords.length; k++) {
-      var nk = pool[i].keywords[k].toLowerCase().replace(/\s/g,'');
-      if (q.includes(nk) || nk.includes(q)) score+=3;
+    for(var k=0;k<pool[i].keywords.length;k++){
+      var nk=_s(pool[i].keywords[k]);
+      if(q.includes(nk)||nk.includes(q)) score+=3;
     }
-    for (var j=0; j<pool[i].questions.length; j++) {
-      var words = pool[i].questions[j].toLowerCase().split(/[\s;,]+/);
-      for (var w=0; w<words.length; w++) {
-        if (words[w].length>1 && q.includes(words[w])) score+=1;
+    for(var j=0;j<pool[i].questions.length;j++){
+      var words=pool[i].questions[j].toLowerCase().split(/[\s;,]+/);
+      for(var w=0;w<words.length;w++){
+        if(words[w].length>1&&q.includes(words[w])) score+=1;
       }
     }
-    if (score>bestScore) { bestScore=score; bestMatch=pool[i]; }
+    if(score>bestScore){bestScore=score;bestMatch=pool[i];}
   }
-  if (bestScore>=2) return {type:'partial', data:bestMatch};
+  if(bestScore>=2) return {type:'partial',data:bestMatch};
 
   // 3단계: 전체 재검색
-  if (selectedLevel1) {
-    for (var i=0; i<qaDB.length; i++) {
-      for (var k=0; k<qaDB[i].keywords.length; k++) {
-        if (q.includes(qaDB[i].keywords[k].toLowerCase().replace(/\s/g,''))) return {type:'partial', data:qaDB[i]};
+  if(selectedLevel1||selectedCat!=='all'){
+    for(var i=0;i<qaDB.length;i++){
+      for(var k=0;k<qaDB[i].keywords.length;k++){
+        if(q.includes(_s(qaDB[i].keywords[k]))) return {type:'partial',data:qaDB[i]};
       }
     }
   }
-  return {type:'none', data:null};
+  return {type:'none',data:null};
 }
 
 // =============================================
 // 메시지 출력
 // =============================================
-function getTime() { return new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}); }
+function _gt(){return new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});}
 
-function addUserMessage(text) {
-  var m = document.getElementById('messages');
-  m.innerHTML += '<div class="message user"><span class="timestamp">'+getTime()+'</span><div class="bubble">'+text+'</div><div class="avatar">👤</div></div>';
-  m.scrollTop = m.scrollHeight;
+function addUserMessage(text){
+  var m=document.getElementById('messages');
+  m.innerHTML+='<div class="message user"><span class="timestamp">'+_gt()+'</span><div class="bubble">'+text+'</div><div class="avatar">👤</div></div>';
+  m.scrollTop=m.scrollHeight;
 }
 
-function addBotMessage(html, source) {
-  var m = document.getElementById('messages');
-  var sh = source ? '<div class="source-tag">📌 출처: '+source+'</div>' : '';
-  m.innerHTML += '<div class="message bot"><div class="avatar">🤖</div><div><div class="bubble">'+html+sh+'</div><span class="timestamp">'+getTime()+'</span></div></div>';
-  m.scrollTop = m.scrollHeight;
+function addBotMessage(html,source){
+  var m=document.getElementById('messages');
+  var sh=source?'<div class="source-tag">📌 출처: '+source+'</div>':'';
+  m.innerHTML+='<div class="message bot"><div class="avatar">🤖</div><div><div class="bubble">'+html+sh+'</div><span class="timestamp">'+_gt()+'</span></div></div>';
+  m.scrollTop=m.scrollHeight;
 }
 
-function showTyping() {
-  var m = document.getElementById('messages');
-  m.innerHTML += '<div class="message bot" id="typingDot"><div class="avatar">🤖</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>';
-  m.scrollTop = m.scrollHeight;
+function showTyping(){
+  var m=document.getElementById('messages');
+  m.innerHTML+='<div class="message bot" id="typingDot"><div class="avatar">🤖</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>';
+  m.scrollTop=m.scrollHeight;
 }
-function removeTyping() { var t=document.getElementById('typingDot'); if(t) t.remove(); }
+function removeTyping(){var t=document.getElementById('typingDot');if(t)t.remove();}
 
 // =============================================
 // 메시지 전송
 // =============================================
-function sendMessage() {
-  var input = document.getElementById('userInput');
-  var text = input.value.trim();
-  if (!text) return;
-  input.value = ''; input.style.height = '44px';
+function sendMessage(){
+  var input=document.getElementById('userInput');
+  var text=input.value.trim();
+  if(!text) return;
+  input.value='';input.style.height='44px';
   addUserMessage(text);
   showTyping();
   setTimeout(function(){
     removeTyping();
-    var result = searchAnswer(text);
-    if (result.type==='exact') {
-      addBotMessage(result.data.answer, result.data.source);
-    } else if (result.type==='partial') {
-      addBotMessage('🔍 관련 내용을 찾았습니다. 아래 내용이 맞나요?<br><br>'+result.data.answer+'<br><br>💬 더 구체적으로 질문해 주시면 정확한 답변을 드릴게요!', result.data.source);
+    var result=searchAnswer(text);
+    if(result.type==='exact'){
+      addBotMessage(result.data.answer,result.data.source);
+    } else if(result.type==='partial'){
+      addBotMessage('🔍 관련 내용을 찾았습니다. 아래 내용이 맞나요?<br><br>'+result.data.answer+'<br><br>💬 더 구체적으로 질문해 주시면 정확한 답변을 드릴게요!',result.data.source);
     } else {
-      addBotMessage('질문에 적합한 검색결과가 없어서 답변을 드릴 수 없습니다.<br><br>💡 다른 키워드로 다시 질문하거나, 상단 메뉴에서 카테고리를 선택해 주세요.', null);
+      addBotMessage('질문에 적합한 검색결과가 없어서 답변을 드릴 수 없습니다.<br><br>💡 다른 키워드로 다시 질문하거나, 상단 메뉴에서 카테고리를 선택해 주세요.',null);
     }
-  }, 600);
+  },600);
 }
 
-function quickAsk(q) { document.getElementById('userInput').value=q; sendMessage(); }
-function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendMessage(); } }
-function autoResize(el) { el.style.height='44px'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
+function quickAsk(q){document.getElementById('userInput').value=q;sendMessage();}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function autoResize(el){el.style.height='44px';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 
 // =============================================
-// 초기 환영 메시지
+// 초기화
 // =============================================
-window.onload = function(){
+window.onload=function(){
+  renderMenuTabs('all');
   setTimeout(function(){
     addBotMessage(
       '안녕하세요! 👋 <b>SK텔레콤 유통망 Q&A 챗봇</b>입니다.<br><br>'+
-      '상단 메뉴 탭을 선택하거나 바로 질문해 주세요!<br><br>'+
-      '📺 <b>IPTV 할인오퍼</b> &nbsp;|&nbsp; ⚠️ <b>비정상 영업관리</b><br>'+
-      '📊 <b>시장 안정화</b> &nbsp;|&nbsp; 🔧 <b>가용/공사/설치</b><br><br>'+
-      '💡 예시: <i>"AI4 셋톱 프로모션"</i>, <i>"단기해지 기준"</i>, <i>"경품 가이드"</i>',
+      '상단에서 업무구분을 선택하거나 바로 질문해 주세요!<br><br>'+
+      '📱 <b>이동전화</b> &nbsp;|&nbsp; 🌐 <b>유선</b><br><br>'+
+      '<b>[이동전화]</b> 🔍 CIA 심사<br>'+
+      '<b>[유선]</b> 📺 IPTV 할인오퍼 &nbsp;|&nbsp; ⚠️ 비정상 영업관리<br>'+
+      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📊 시장 안정화 &nbsp;|&nbsp; 🔧 가용/공사/설치 &nbsp;|&nbsp; 📺 매장 시연 회선<br><br>'+
+      '💡 예시: <i>"CIA 완비율 기준"</i>, <i>"AI4 셋톱 프로모션"</i>, <i>"단기해지 기준"</i>, <i>"시연회선 지원 조건"</i>',
       null
     );
-  }, 300);
+  },300);
 };
 </script>
 </body>
 </html>
-
